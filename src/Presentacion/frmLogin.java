@@ -1,21 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package Vistas;
 
-/**
- *
- * @author GATO
- */
+package Presentacion;
+
+import com.sun.awt.AWTUtilities;
+import Negocio.*;
+import Datos.*;
+import javax.swing.JOptionPane;
+
 public class frmLogin extends javax.swing.JFrame {
 
-    /**
-     * Creates new form frmLogin
-     */
+    int x,y;
     public frmLogin() {
         initComponents();
+         AWTUtilities.setWindowOpaque(this,false);//con esta instruccion no se vera el frame de fondo
+        this.setLocationRelativeTo(null);//con esta instruccion aparecera centrada la ventana
     }
 
     /**
@@ -27,12 +24,37 @@ public class frmLogin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         txtUser = new javax.swing.JTextField();
-        txtPassword = new javax.swing.JPasswordField();
+        txtPass = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jLabel2MouseDragged(evt);
+            }
+        });
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel2MousePressed(evt);
+            }
+        });
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 70));
+
+        jButton1.setBackground(new java.awt.Color(53, 49, 76));
+        jButton1.setBorder(null);
+        jButton1.setContentAreaFilled(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 460, 200, 40));
 
         txtUser.setBackground(new java.awt.Color(206, 212, 224));
         txtUser.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -40,17 +62,45 @@ public class frmLogin extends javax.swing.JFrame {
         txtUser.setBorder(null);
         getContentPane().add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 280, 330, 40));
 
-        txtPassword.setBackground(new java.awt.Color(206, 212, 224));
-        txtPassword.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        txtPassword.setForeground(new java.awt.Color(255, 255, 255));
-        txtPassword.setBorder(null);
-        getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 350, 320, 40));
+        txtPass.setBackground(new java.awt.Color(206, 212, 224));
+        txtPass.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        txtPass.setForeground(new java.awt.Color(255, 255, 255));
+        txtPass.setBorder(null);
+        getContentPane().add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 350, 320, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/plantilla-de-login_1017-6719.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 620));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MousePressed
+        x=evt.getX();
+        y=evt.getY();
+    }//GEN-LAST:event_jLabel2MousePressed
+
+    private void jLabel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseDragged
+      this.setLocation(this.getLocation().x + evt.getX()- x ,this.getLocation().y+evt.getY()- y);
+    }//GEN-LAST:event_jLabel2MouseDragged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       
+        DUser user=new DUser();
+        
+        user.setLogin(txtUser.getText());
+        user.setPassword(txtPass.getText());
+        
+        NUser nuser=new NUser();
+        boolean result= nuser.VerificaUser(user);
+        
+        if(result)
+        {
+            JOptionPane.showMessageDialog(null,"Verificado");
+        }
+        else
+        { JOptionPane.showMessageDialog(null,"Validation Fail");}
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -88,8 +138,10 @@ public class frmLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
 }
