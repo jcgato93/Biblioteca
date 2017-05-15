@@ -4,10 +4,15 @@ package Presentacion;
 import com.sun.awt.AWTUtilities;
 import Negocio.*;
 import Datos.*;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class frmLogin extends javax.swing.JFrame {
 
+  
+    
     int x,y;
     public frmLogin() {
         initComponents();
@@ -59,12 +64,14 @@ public class frmLogin extends javax.swing.JFrame {
         txtUser.setBackground(new java.awt.Color(206, 212, 224));
         txtUser.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         txtUser.setForeground(new java.awt.Color(255, 255, 255));
+        txtUser.setToolTipText("User");
         txtUser.setBorder(null);
         getContentPane().add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 280, 330, 40));
 
         txtPass.setBackground(new java.awt.Color(206, 212, 224));
         txtPass.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         txtPass.setForeground(new java.awt.Color(255, 255, 255));
+        txtPass.setToolTipText("Password");
         txtPass.setBorder(null);
         getContentPane().add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 350, 320, 40));
 
@@ -80,25 +87,44 @@ public class frmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel2MousePressed
 
     private void jLabel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseDragged
-      this.setLocation(this.getLocation().x + evt.getX()- x ,this.getLocation().y+evt.getY()- y);
+      this.setLocation(this.getLocation().x + evt.getX()- x ,this.getLocation().y+evt.getY()- y);//Para poder arrastrarlo por la parte superior
     }//GEN-LAST:event_jLabel2MouseDragged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        
-        DUser user=new DUser();
+       try {
+            DUsuarios user=new DUsuarios();
+            
+            user.setLogin(txtUser.getText());
+            user.setPassword(txtPass.getText());
+            
+            NUsuarios nuser=new NUsuarios();
+            boolean result= nuser.VerificaUser(user);
+            
+            if(result){
+            user=nuser.retornaUsuario(user.getLogin(),user.getPassword());
+            DashBoard pPrincipal=new DashBoard();
         
-        user.setLogin(txtUser.getText());
-        user.setPassword(txtPass.getText());
         
-        NUser nuser=new NUser();
-        boolean result= nuser.VerificaUser(user);
-        
-        if(result)
-        {
-            JOptionPane.showMessageDialog(null,"Verificado");
+            pPrincipal.txtnameUser.setText(user.getNombre()+" "+user.getApellido());
+            pPrincipal.txtUserId.setText(String.valueOf(user.getUserId()));
+            pPrincipal.txtrolIdUser.setText(String.valueOf(user.getRolId()));
+            
+           
+            pPrincipal.setVisible(true);
+            
+            
+           
+            dispose();//Cierra el form
+           
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null,"Usuario o Password Invalido");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(frmLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
-        else
-        { JOptionPane.showMessageDialog(null,"Validation Fail");}
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -144,4 +170,8 @@ public class frmLogin extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
+
+ 
+
+   
 }

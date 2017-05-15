@@ -6,7 +6,7 @@
 package Datos;
 
 
-public class DUser {
+public class DUsuarios {
     private int UserId;
     private String Nombre;
     private String Apellido ;
@@ -14,7 +14,7 @@ public class DUser {
     private String Password;
     private int  RolId;
     
-    public DUser(){
+    public DUsuarios(){
     
     }
 
