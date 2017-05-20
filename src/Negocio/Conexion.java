@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 
 public class Conexion {
     String db="Biblioteca";
-    String url="jdbc:sqlserver://localhost:1433;databaseName=Biblioteca;";
+    String url="jdbc:sqlserver://localhost:1433;databaseName="+db+";";
     String user="Invitado";
     String pass="pacifico";
  

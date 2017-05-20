@@ -3,8 +3,15 @@ package Presentacion;
 
 import com.sun.awt.AWTUtilities;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.beans.PropertyVetoException;
 import java.time.Instant;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 
 
@@ -14,16 +21,15 @@ public class DashBoard extends javax.swing.JFrame {
 
      Color colEntered=new Color(153,153,153);
      Color colExited=new Color(34, 34, 34);
-     
+     frmLibro libro;
+     int instanciaLibro=0;//Para controlar que se habra mas de un formulario a la vez
      
     public DashBoard() {
         initComponents(); 
         this.txtrolIdUser.setVisible(false);
         this.txtUserId.setVisible(false);
-        this.calendarLibros.setDate(Date.from(Instant.now()));
-        
-        this.setLocationRelativeTo(null);//con esta instruccion aparecera centrada la ventana
-       
+        //this.calendarLibros.setDate(Date.from(Instant.now()));
+        this.setLocationRelativeTo(null);//con esta instruccion aparecera centrada la ventana 
     }
 
     /**
@@ -49,7 +55,7 @@ public class DashBoard extends javax.swing.JFrame {
         txtrolIdUser = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         panelLibros = new javax.swing.JPanel();
-        calendarLibros = new com.toedter.calendar.JDateChooser();
+        jDesktopPane = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -85,6 +91,11 @@ public class DashBoard extends javax.swing.JFrame {
         btnLibros.setText("Libros");
         btnLibros.setToolTipText("");
         btnLibros.setOpaque(true);
+        btnLibros.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnLibrosMouseClicked(evt);
+            }
+        });
 
         btnUsuarios.setBackground(new java.awt.Color(34, 34, 34));
         btnUsuarios.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -210,25 +221,28 @@ public class DashBoard extends javax.swing.JFrame {
         panelLibros.setBackground(new java.awt.Color(255, 255, 255));
         panelLibros.setAutoscrolls(true);
 
-        calendarLibros.setBackground(new java.awt.Color(34, 34, 34));
-        calendarLibros.setForeground(new java.awt.Color(153, 153, 153));
-        calendarLibros.setAutoscrolls(true);
+        jDesktopPane.setAutoscrolls(true);
+
+        javax.swing.GroupLayout jDesktopPaneLayout = new javax.swing.GroupLayout(jDesktopPane);
+        jDesktopPane.setLayout(jDesktopPaneLayout);
+        jDesktopPaneLayout.setHorizontalGroup(
+            jDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jDesktopPaneLayout.setVerticalGroup(
+            jDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout panelLibrosLayout = new javax.swing.GroupLayout(panelLibros);
         panelLibros.setLayout(panelLibrosLayout);
         panelLibrosLayout.setHorizontalGroup(
             panelLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLibrosLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(calendarLibros, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(jDesktopPane)
         );
         panelLibrosLayout.setVerticalGroup(
             panelLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelLibrosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(calendarLibros, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jDesktopPane)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -264,6 +278,27 @@ public class DashBoard extends javax.swing.JFrame {
     private void btnLogOutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogOutMouseClicked
         System.exit(0);//Cierra la aplicacion
     }//GEN-LAST:event_btnLogOutMouseClicked
+
+    private void btnLibrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLibrosMouseClicked
+
+        if(instanciaLibro<1){
+            try {
+                libro=new frmLibro();
+                jDesktopPane.add(libro);
+                libro.setMaximum(true);
+                libro.show();
+                instanciaLibro++;
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(DashBoard.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, ex);
+            } 
+        }  else{
+            libro.dispose();
+            instanciaLibro--;
+            jDesktopPane.removeAll();
+            
+        }
+    }//GEN-LAST:event_btnLibrosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -307,7 +342,7 @@ public class DashBoard extends javax.swing.JFrame {
     private javax.swing.JLabel btnPrestamos;
     private javax.swing.JLabel btnReportes;
     private javax.swing.JLabel btnUsuarios;
-    private com.toedter.calendar.JDateChooser calendarLibros;
+    private javax.swing.JDesktopPane jDesktopPane;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -318,4 +353,5 @@ public class DashBoard extends javax.swing.JFrame {
     public javax.swing.JLabel txtrolIdUser;
     // End of variables declaration//GEN-END:variables
 
+    
 }
