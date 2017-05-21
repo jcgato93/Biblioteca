@@ -2,9 +2,8 @@
 package Presentacion;
 
 import Negocio.NLibro;
-import Tabla.Render;
+
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -20,8 +19,7 @@ public class frmLibro extends javax.swing.JInternalFrame {
     public frmLibro() {
         initComponents();
       
-        llenar_Tabla("WHERE 1=1");
-         
+        llenar_Tabla("WHERE 1=1");   
     }
 
 
@@ -32,10 +30,6 @@ public class frmLibro extends javax.swing.JInternalFrame {
             modelo =libro.fillDataTable(filtro);
             
             jTableLibro.setModel(modelo);
-       
-            
-            //ocultar_columnas();
-      
 
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(rootPane, e);
@@ -96,8 +90,8 @@ public class frmLibro extends javax.swing.JInternalFrame {
             }
         });
         jTableLibro.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableLibroMouseClicked(evt);
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTableLibroMousePressed(evt);
             }
         });
         jScrollPane1.setViewportView(jTableLibro);
@@ -179,7 +173,7 @@ public class frmLibro extends javax.swing.JInternalFrame {
                     .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -196,7 +190,7 @@ public class frmLibro extends javax.swing.JInternalFrame {
         );
         panelMantenimientoLayout.setVerticalGroup(
             panelMantenimientoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 427, Short.MAX_VALUE)
+            .addGap(0, 459, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Mantenimiento", panelMantenimiento);
@@ -240,11 +234,14 @@ public class frmLibro extends javax.swing.JInternalFrame {
        
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTableLibroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableLibroMouseClicked
- 
-
+    private void jTableLibroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableLibroMousePressed
+         if(evt.getClickCount()==2)
+        {
+           jTabbedPane1.setSelectedIndex(1);
            
-    }//GEN-LAST:event_jTableLibroMouseClicked
+         
+        }
+    }//GEN-LAST:event_jTableLibroMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

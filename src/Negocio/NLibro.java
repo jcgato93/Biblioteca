@@ -2,7 +2,6 @@
 package Negocio;
 import Datos.*;
 import Presentacion.*;
-import Tabla.Render;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

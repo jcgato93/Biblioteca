@@ -49,6 +49,7 @@ public class DashBoard extends javax.swing.JFrame {
         btnClientes = new javax.swing.JLabel();
         btnReportes = new javax.swing.JLabel();
         btnLogOut = new javax.swing.JLabel();
+        btnRevistas = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         txtnameUser = new javax.swing.JLabel();
         txtUserId = new javax.swing.JLabel();
@@ -137,6 +138,20 @@ public class DashBoard extends javax.swing.JFrame {
             }
         });
 
+        btnRevistas.setBackground(new java.awt.Color(34, 34, 34));
+        btnRevistas.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnRevistas.setForeground(new java.awt.Color(202, 202, 202));
+        btnRevistas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnRevistas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/Magazine_60px.png"))); // NOI18N
+        btnRevistas.setText("Revistas");
+        btnRevistas.setToolTipText("");
+        btnRevistas.setOpaque(true);
+        btnRevistas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRevistasMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -154,6 +169,7 @@ public class DashBoard extends javax.swing.JFrame {
             .addComponent(btnClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnReportes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnLogOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnRevistas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,7 +186,9 @@ public class DashBoard extends javax.swing.JFrame {
                 .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
@@ -215,7 +233,7 @@ public class DashBoard extends javax.swing.JFrame {
                     .addComponent(txtnameUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtrolIdUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         panelLibros.setBackground(new java.awt.Color(255, 255, 255));
@@ -227,11 +245,11 @@ public class DashBoard extends javax.swing.JFrame {
         jDesktopPane.setLayout(jDesktopPaneLayout);
         jDesktopPaneLayout.setHorizontalGroup(
             jDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 1169, Short.MAX_VALUE)
         );
         jDesktopPaneLayout.setVerticalGroup(
             jDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 737, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout panelLibrosLayout = new javax.swing.GroupLayout(panelLibros);
@@ -300,6 +318,10 @@ public class DashBoard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnLibrosMouseClicked
 
+    private void btnRevistasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRevistasMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRevistasMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -341,6 +363,7 @@ public class DashBoard extends javax.swing.JFrame {
     private javax.swing.JLabel btnLogOut;
     private javax.swing.JLabel btnPrestamos;
     private javax.swing.JLabel btnReportes;
+    private javax.swing.JLabel btnRevistas;
     private javax.swing.JLabel btnUsuarios;
     private javax.swing.JDesktopPane jDesktopPane;
     private javax.swing.JLabel jLabel1;
