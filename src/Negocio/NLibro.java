@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -31,7 +32,7 @@ public class NLibro {
     public DefaultTableModel fillDataTable(String filtro) {
         DefaultTableModel modelo;
 
-        String[] titulos = {"ID","Titulo","Categoria","Autor","Status","Editar"};
+        String[] titulos = {"ID","Titulo","Categoria","Autor","Status"};
 
         Object[] registro = new Object[5];
 
@@ -69,6 +70,46 @@ public class NLibro {
         }
         }
         
+    
+    //====================LLENAR COMBOBOX CON LAS CATEGORIAS=======================================
+    
+        public DefaultComboBoxModel fillComboBox() {
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+
+       
+
+        Object[] registro = new Object[2];
+
+    
+ 
+        query ="SELECT * FROM Categoria";
+
+        try {
+            PreparedStatement st = com.prepareStatement(query);
+            
+            
+            ResultSet rs = st.executeQuery();
+
+            
+            
+            while (rs.next()) {
+                registro[0] = rs.getString("CategoriaId");
+                registro[1] = rs.getString("Nombre");
+                
+             
+ 
+                modelo.addElement(registro[1]);
+            }
+            return modelo;
+
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+            return null;
+        }
+        }
+    
+    
+    
         
    //=================INSERTAR DATOS  ====================================================
         
@@ -107,7 +148,7 @@ public class NLibro {
     public boolean actualizar(DLibro Libro) {
       
         boolean result=false;
-        query = "UPDATE Libro SET Nombre=?,Categoria=?,Autor=?,Status=?0 WHERE LibroId=?"
+        query = "UPDATE Libro SET Nombre=?,Categoria=?,Autor=?,Status=? WHERE LibroId=?"
         + "values (?,?,?,?,?)";
       
         try {
