@@ -116,7 +116,7 @@ public class NLibro {
     public boolean insertar(DLibro Libro) {
       
         boolean result=false;
-        query = "INSERT INTO Libro (Nombre,Categoria,Autor,Status)"
+        query = "INSERT INTO Libro (Nombre,CategoriaId,Autor,Status)"
         + "values (?,?,?,?)";
       
         try {
@@ -148,8 +148,8 @@ public class NLibro {
     public boolean actualizar(DLibro Libro) {
       
         boolean result=false;
-        query = "UPDATE Libro SET Nombre=?,Categoria=?,Autor=?,Status=? WHERE LibroId=?"
-        + "values (?,?,?,?,?)";
+        query = "UPDATE Libro SET Nombre=?,CategoriaId=?,Autor=?,Status=? WHERE LibroId=?";
+        
       
         try {
 
@@ -204,4 +204,37 @@ public class NLibro {
     } 
             
   
+    //=========================VERIFICA SI EXISTE LIBRO=============================================
+          public boolean verificaLibro(DLibro libro) {
+              
+        query ="SELECT * FROM Libro WHERE Nombre=? AND CategoriaId=? ";
+
+        int contador=0;
+        boolean result=false;
+        
+        try {
+            PreparedStatement st = com.prepareStatement(query);
+            
+           st.setString(1, libro.getNombre());
+           st.setInt(2, libro.getCategoria());
+            
+            ResultSet rs = st.executeQuery();
+
+            
+            
+            while (rs.next()) {
+              contador++;
+            }
+            
+            if(contador>0)
+            {
+            result=true;
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+            
+        }
+          return result;
+        }
 }

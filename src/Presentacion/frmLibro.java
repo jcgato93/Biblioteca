@@ -1,8 +1,8 @@
 
 package Presentacion;
 
+import Datos.DLibro;
 import Negocio.NLibro;
-import java.awt.Point;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -12,20 +12,23 @@ import javax.swing.JTable;
 
 
 public class frmLibro extends javax.swing.JInternalFrame {
-
-  int MaxWidth=0;
-  int MinWidth=0;
-  int Preferred=0;
+   
+       
+    NLibro libroTools;
     
-     
     public frmLibro() {
         initComponents();
-      
-        llenar_Tabla("WHERE 1=1");  
+       
+         libroTools=new NLibro();
+        
+        apply_filters();
         llenar_cbCategoria();
+        
+        this.cbCategoria.setSelectedIndex(1);
+        this.btnModificar.setEnabled(false);
+        this.btnBorrar.setEnabled(false);
+        this.btnGuardar.setEnabled(false);
     }
-
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -70,6 +73,11 @@ public class frmLibro extends javax.swing.JInternalFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabbedPane1MouseClicked(evt);
+            }
+        });
 
         panelConsulta.setBackground(new java.awt.Color(255, 255, 255));
         panelConsulta.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Consulta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
@@ -117,9 +125,9 @@ public class frmLibro extends javax.swing.JInternalFrame {
         btnTema.setText("Tema");
         btnTema.setContentAreaFilled(false);
         btnTema.setOpaque(true);
-        btnTema.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTemaActionPerformed(evt);
+        btnTema.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTemaMouseClicked(evt);
             }
         });
 
@@ -131,6 +139,11 @@ public class frmLibro extends javax.swing.JInternalFrame {
         btnAutor.setText("Autor");
         btnAutor.setContentAreaFilled(false);
         btnAutor.setOpaque(true);
+        btnAutor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAutorMouseClicked(evt);
+            }
+        });
 
         btnTitulo.setBackground(new java.awt.Color(54, 177, 124));
         btnTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -138,9 +151,9 @@ public class frmLibro extends javax.swing.JInternalFrame {
         btnTitulo.setText("Titulo");
         btnTitulo.setContentAreaFilled(false);
         btnTitulo.setOpaque(true);
-        btnTitulo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTituloActionPerformed(evt);
+        btnTitulo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTituloMouseClicked(evt);
             }
         });
 
@@ -180,7 +193,7 @@ public class frmLibro extends javax.swing.JInternalFrame {
                     .addComponent(txtGetAutor, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnAutor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(67, 67, 67)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -204,6 +217,7 @@ public class frmLibro extends javax.swing.JInternalFrame {
         jLabel3.setText("Categoria");
 
         cbCategoria.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        cbCategoria.setAutoscrolls(true);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("Autor");
@@ -222,6 +236,11 @@ public class frmLibro extends javax.swing.JInternalFrame {
         btnNuevo.setText("Nuevo");
         btnNuevo.setContentAreaFilled(false);
         btnNuevo.setOpaque(true);
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         btnModificar.setBackground(new java.awt.Color(54, 177, 124));
         btnModificar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -229,6 +248,11 @@ public class frmLibro extends javax.swing.JInternalFrame {
         btnModificar.setText("Modificar");
         btnModificar.setContentAreaFilled(false);
         btnModificar.setOpaque(true);
+        btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModificarMouseClicked(evt);
+            }
+        });
 
         btnBorrar.setBackground(new java.awt.Color(54, 177, 124));
         btnBorrar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -236,6 +260,11 @@ public class frmLibro extends javax.swing.JInternalFrame {
         btnBorrar.setText("Borrar");
         btnBorrar.setContentAreaFilled(false);
         btnBorrar.setOpaque(true);
+        btnBorrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBorrarMouseClicked(evt);
+            }
+        });
 
         btnGuardar.setBackground(new java.awt.Color(54, 177, 124));
         btnGuardar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -243,6 +272,11 @@ public class frmLibro extends javax.swing.JInternalFrame {
         btnGuardar.setText("Guardar");
         btnGuardar.setContentAreaFilled(false);
         btnGuardar.setOpaque(true);
+        btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGuardarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelMantenimientoLayout = new javax.swing.GroupLayout(panelMantenimiento);
         panelMantenimiento.setLayout(panelMantenimientoLayout);
@@ -298,7 +332,7 @@ public class frmLibro extends javax.swing.JInternalFrame {
                 .addGroup(panelMantenimientoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(cbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelMantenimientoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBorrar)
                     .addComponent(btnNuevo)
@@ -340,14 +374,6 @@ public class frmLibro extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTituloActionPerformed
-        
-    }//GEN-LAST:event_btnTituloActionPerformed
-
-    private void btnTemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTemaActionPerformed
-       
-    }//GEN-LAST:event_btnTemaActionPerformed
-
     private void jTableLibroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableLibroMousePressed
  
         if(evt.getClickCount()==2)
@@ -361,10 +387,198 @@ public class frmLibro extends javax.swing.JInternalFrame {
            this.cbStatus.setSelectedItem(((table.getValueAt(table.getSelectedRow(),4))));
            
            jTabbedPane1.setSelectedIndex(1); 
+           
+           this.btnBorrar.setEnabled(true);
+           this.btnModificar.setEnabled(true); 
         }
     }//GEN-LAST:event_jTableLibroMousePressed
 
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+       
+        this.btnBorrar.setEnabled(false);
+        this.btnModificar.setEnabled(false);
+        this.btnGuardar.setEnabled(true);
+        
+        //Limpiar los campos 
+        this.txtLibroId.setText("");
+        this.txtTitulo.setText("");
+        this.txtAutor.setText("");  
+    }//GEN-LAST:event_btnNuevoActionPerformed
 
+    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
+      //Limpiar los campos 
+            this.txtLibroId.setText("");
+            this.txtTitulo.setText("");
+            this.txtAutor.setText("");
+            
+            this.btnModificar.setEnabled(false);
+            this.btnBorrar.setEnabled(false);
+            this.btnGuardar.setEnabled(false);
+            
+            if(jTabbedPane1.getSelectedIndex()==1)
+            {
+              apply_filters();
+            }
+      
+    }//GEN-LAST:event_jTabbedPane1MouseClicked
+
+    private void btnTituloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTituloMouseClicked
+      apply_filters();
+    }//GEN-LAST:event_btnTituloMouseClicked
+
+    private void btnTemaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTemaMouseClicked
+        apply_filters();
+    }//GEN-LAST:event_btnTemaMouseClicked
+
+    private void btnAutorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAutorMouseClicked
+       apply_filters();
+    }//GEN-LAST:event_btnAutorMouseClicked
+
+    private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
+        
+        if(!txtTitulo.getText().equals("") && !txtAutor.getText().equals(""))
+        {
+        DLibro obj=new DLibro();
+        
+        obj.setNombre(txtTitulo.getText());
+        obj.setCategoria(cbCategoria.getSelectedIndex()+1);
+        obj.setAutor(txtAutor.getText());
+        obj.setStatus(String.valueOf(cbStatus.getSelectedItem()));
+        obj.setLibroId(Integer.parseInt(txtLibroId.getText()));
+        
+        boolean result= libroTools.actualizar(obj);
+        
+        if(result)
+        {
+          JOptionPane.showMessageDialog(null,"Se actualizo correctamente");
+        }
+        else
+        {
+          JOptionPane.showMessageDialog(null,"No se pudo Actualizar");
+        }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null,"Faltan Datos");
+        }
+        
+    }//GEN-LAST:event_btnModificarMouseClicked
+
+    private void btnBorrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBorrarMouseClicked
+        DLibro obj=new DLibro();
+        
+        obj.setLibroId(Integer.parseInt(txtLibroId.getText()));
+        
+        boolean result=libroTools.eliminar(obj);
+        
+        if(result)
+        {
+         JOptionPane.showMessageDialog(null,"Se Elimino el registro correctamente");
+         
+            this.txtLibroId.setText("");
+            this.txtTitulo.setText("");
+            this.txtAutor.setText("");
+            
+            this.btnModificar.setEnabled(false);
+            this.btnBorrar.setEnabled(false);
+        }
+        else
+        {
+         JOptionPane.showMessageDialog(null, "No se pudo Eliminar el registro");
+        }
+        
+    }//GEN-LAST:event_btnBorrarMouseClicked
+
+    private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
+        DLibro obj=new DLibro();
+
+        obj.setNombre(txtTitulo.getText());
+        obj.setCategoria(cbCategoria.getSelectedIndex()+1);
+        obj.setAutor(txtAutor.getText());
+        obj.setStatus(String.valueOf(cbStatus.getSelectedItem()));
+        
+         boolean isExiste=libroTools.verificaLibro(obj);
+         
+         if(isExiste)
+         {
+          JOptionPane.showMessageDialog(null,"Ya Existe el libro en la Base de Datos");
+         }
+         else
+         {
+          boolean result= libroTools.insertar(obj); 
+          
+          if(result)
+          {
+            JOptionPane.showMessageDialog(null, "Se inserto el Registro Correctamente");
+          }
+          else
+          {
+           JOptionPane.showMessageDialog(null, "No se logro ingresar el Registro");
+          }
+          
+         }
+        
+        
+    }//GEN-LAST:event_btnGuardarMouseClicked
+
+
+    /**
+     * aplica los filtros si los hay, y llena el JTable
+     */
+    private void apply_filters()
+    {
+    int x=0;
+    String query="";
+    if(!txtGetTitulo.getText().equals(""))
+    {
+        if(x==0)
+        {
+         query="WHERE ";
+         x++;
+        }
+        else
+        {
+         query="AND ";
+        }
+        query=query+"li.Nombre like '"+txtGetTitulo.getText()+"%' ";
+    }
+    
+    if(!txtGetTema.getText().equals(""))
+    {
+      if(x==0)
+      {
+       query="WHERE ";
+       x++;
+      }
+      else
+      {
+          query="AND ";
+      }
+      query=query+"ca.Nombre like '"+txtGetTema.getText()+"%' ";
+    }
+    
+    if(!txtGetAutor.getText().equals(""))
+    {
+      if(x==0)
+      {
+          query="WHERE ";
+      }
+      else
+      {
+       query="AND ";
+      }
+      query=query+"li.Autor like '"+txtGetAutor.getText()+"%' ";
+    }
+    
+    if(query.equals(""))
+    {
+      query="WHERE 1=1";
+    }
+    
+        llenar_Tabla(query);//llena la tabla
+    }
+    
+    
   private  void llenar_Tabla(String filtro) {
         try {
             DefaultTableModel modelo;
@@ -391,8 +605,6 @@ public class frmLibro extends javax.swing.JInternalFrame {
       } catch (Exception e) {
           JOptionPane.showConfirmDialog(rootPane, e);
       }
-      
-  
   }
     
     
