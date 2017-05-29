@@ -193,7 +193,7 @@ public class frmLibro extends javax.swing.JInternalFrame {
                     .addComponent(txtGetAutor, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnAutor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(67, 67, 67)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -254,7 +254,7 @@ public class frmLibro extends javax.swing.JInternalFrame {
             }
         });
 
-        btnBorrar.setBackground(new java.awt.Color(54, 177, 124));
+        btnBorrar.setBackground(new java.awt.Color(255, 102, 102));
         btnBorrar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnBorrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/Delete_30px.png"))); // NOI18N
         btnBorrar.setText("Borrar");

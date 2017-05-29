@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 
@@ -18,10 +19,17 @@ public class DashBoard extends javax.swing.JFrame {
      Color colEntered=new Color(153,153,153);
      Color colExited=new Color(34, 34, 34);
      frmLibro libro;
+     frmPrestamo prestamo;
+     
      int instanciaLibro=0;//Para controlar que se habra mas de un formulario a la vez
+     int instanciaPrestamo=0;
+     
+     
      
     public DashBoard() {
         initComponents(); 
+        setIconImage(new ImageIcon(getClass().getResource("../Files/Books_30px_1.png")).getImage());//Icono del Formulario
+        
         this.txtrolIdUser.setVisible(false);
         this.txtUserId.setVisible(false);
         //this.calendarLibros.setDate(Date.from(Instant.now()));
@@ -55,6 +63,7 @@ public class DashBoard extends javax.swing.JFrame {
         jDesktopPane = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("DashBoard");
         setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(34, 34, 34));
@@ -72,6 +81,9 @@ public class DashBoard extends javax.swing.JFrame {
         btnPrestamos.setText("Prestamos");
         btnPrestamos.setOpaque(true);
         btnPrestamos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnPrestamosMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnPrestamosMouseEntered(evt);
             }
@@ -291,7 +303,7 @@ public class DashBoard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLogOutMouseClicked
 
     private void btnLibrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLibrosMouseClicked
-
+ 
         if(instanciaLibro<1){
             try {
                 libro=new frmLibro();
@@ -314,6 +326,27 @@ public class DashBoard extends javax.swing.JFrame {
     private void btnRevistasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRevistasMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRevistasMouseClicked
+
+    private void btnPrestamosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrestamosMouseClicked
+
+        if(instanciaPrestamo<1)
+        {
+            try {
+                prestamo=new frmPrestamo();
+                jDesktopPane.add(prestamo);
+                prestamo.setMaximum(true);
+                prestamo.show();
+                instanciaPrestamo++;
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this,ex);
+            }
+        }
+        else{
+         prestamo.dispose();
+         instanciaPrestamo--;
+         jDesktopPane.removeAll();
+        }
+    }//GEN-LAST:event_btnPrestamosMouseClicked
 
     /**
      * @param args the command line arguments
