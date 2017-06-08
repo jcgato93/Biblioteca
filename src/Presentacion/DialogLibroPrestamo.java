@@ -1,22 +1,29 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Presentacion;
 
-import Negocio.NCliente;
+import Negocio.NLibro;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ *
+ * @author GATO
+ */
+public class DialogLibroPrestamo extends javax.swing.JDialog {
 
-public class DialogClientePrestamo extends javax.swing.JDialog {
-
-   
-    public DialogClientePrestamo(java.awt.Frame parent, boolean modal) {
+    /**
+     * Creates new form DialogLibroPrestamo
+     */
+    public DialogLibroPrestamo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         
-        this.setLocationRelativeTo(null);//con esta instruccion aparecera centrada la ventana
-        
-        llenar_Tabla();
+        llenar_Tabla("Where 1=1");
     }
 
     /**
@@ -30,41 +37,41 @@ public class DialogClientePrestamo extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableCliente = new javax.swing.JTable();
+        jTableLibro = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTableCliente.setModel(new javax.swing.table.DefaultTableModel(
+        jTableLibro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nombre", "Apellido", "Telefono", "Identificacion", "Status"
+                "ID", "Titulo", "Categoria", "Autor", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTableCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTableLibro.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jTableClienteMousePressed(evt);
+                jTableLibroMousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(jTableCliente);
+        jScrollPane1.setViewportView(jTableLibro);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setText("Cliente");
+        jLabel1.setText("Libros");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -73,7 +80,7 @@ public class DialogClientePrestamo extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 745, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 790, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -84,8 +91,8 @@ public class DialogClientePrestamo extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -103,20 +110,27 @@ public class DialogClientePrestamo extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTableClienteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableClienteMousePressed
+    private void jTableLibroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableLibroMousePressed
 
         if(evt.getClickCount()==2)
         {
             JTable table =(JTable) evt.getSource();
-            String Name=(String.valueOf(table.getValueAt(table.getSelectedRow(),1)));
-            String ClientId=(String.valueOf(table.getValueAt(table.getSelectedRow(),0)));
-          frmPrestamo frmpres=new frmPrestamo(Name,ClientId);
             
-           
+            Object[] DatosLibro={
+                (String.valueOf(jTableLibro.getValueAt(jTableLibro.getSelectedRow(),0))),
+                (String.valueOf(jTableLibro.getValueAt(jTableLibro.getSelectedRow(),1))),
+                (String.valueOf(jTableLibro.getValueAt(jTableLibro.getSelectedRow(),2))),
+                (String.valueOf(jTableLibro.getValueAt(jTableLibro.getSelectedRow(),3))),
+                (String.valueOf(jTableLibro.getValueAt(jTableLibro.getSelectedRow(),4)))
+            };
+            
+                    
+            frmPrestamo frm=new frmPrestamo(DatosLibro);
+            
+            this.setVisible(false);
 
-          this.setVisible(false);//closed of form
         }
-    }//GEN-LAST:event_jTableClienteMousePressed
+    }//GEN-LAST:event_jTableLibroMousePressed
 
     /**
      * @param args the command line arguments
@@ -135,20 +149,20 @@ public class DialogClientePrestamo extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DialogClientePrestamo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogLibroPrestamo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DialogClientePrestamo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogLibroPrestamo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DialogClientePrestamo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogLibroPrestamo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DialogClientePrestamo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogLibroPrestamo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DialogClientePrestamo dialog = new DialogClientePrestamo(new javax.swing.JFrame(), true);
+                DialogLibroPrestamo dialog = new DialogLibroPrestamo(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -160,24 +174,24 @@ public class DialogClientePrestamo extends javax.swing.JDialog {
         });
     }
 
-     private void llenar_Tabla() {
+    
+      private  void llenar_Tabla(String filtro) {
         try {
             DefaultTableModel modelo;
-            NCliente Cliente = new NCliente();
-            modelo= Cliente.fillDataTable("Where 1=1");
+            NLibro libro = new NLibro();
+            modelo =libro.fillDataTable(filtro);
             
-            jTableCliente.setModel(modelo);
+            jTableLibro.setModel(modelo);
 
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(rootPane, e);
         }
-     }
-    
+  }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableCliente;
+    private javax.swing.JTable jTableLibro;
     // End of variables declaration//GEN-END:variables
 }

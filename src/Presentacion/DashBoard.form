@@ -195,6 +195,9 @@
             <Property name="text" type="java.lang.String" value="Clientes"/>
             <Property name="opaque" type="boolean" value="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnClientesMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="btnReportes">
           <Properties>

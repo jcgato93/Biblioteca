@@ -20,9 +20,11 @@ public class DashBoard extends javax.swing.JFrame {
      Color colExited=new Color(34, 34, 34);
      frmLibro libro;
      frmPrestamo prestamo;
+     frmCliente cliente;
      
      int instanciaLibro=0;//Para controlar que se habra mas de un formulario a la vez
      int instanciaPrestamo=0;
+     int instanciaCliente=0;
      
      
      
@@ -122,6 +124,11 @@ public class DashBoard extends javax.swing.JFrame {
         btnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/Queue_60px.png"))); // NOI18N
         btnClientes.setText("Clientes");
         btnClientes.setOpaque(true);
+        btnClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnClientesMouseClicked(evt);
+            }
+        });
 
         btnReportes.setBackground(new java.awt.Color(34, 34, 34));
         btnReportes.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -347,6 +354,26 @@ public class DashBoard extends javax.swing.JFrame {
          jDesktopPane.removeAll();
         }
     }//GEN-LAST:event_btnPrestamosMouseClicked
+
+    private void btnClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClientesMouseClicked
+          if(instanciaCliente<1)
+        {
+            try {
+                cliente=new frmCliente();
+                jDesktopPane.add(cliente);
+                cliente.setMaximum(true);
+                cliente.show();
+                instanciaCliente++;
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this,ex);
+            }
+        }
+        else{
+         cliente.dispose();
+         instanciaCliente--;
+         jDesktopPane.removeAll();
+        }
+    }//GEN-LAST:event_btnClientesMouseClicked
 
     /**
      * @param args the command line arguments

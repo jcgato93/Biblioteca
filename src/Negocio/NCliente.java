@@ -36,7 +36,7 @@ public class NCliente {
         
 
 
-        query ="SELECT  cli.ClienteId,cli.Nombre, cli.Apellido, cli.Telefono,cli.Identificacion, cli.[Status] FROM Cliente "+filtro;
+        query ="SELECT  cli.ClienteId,cli.Nombre, cli.Apellido, cli.Telefono,cli.Identificacion, cli.[Status] FROM Cliente cli "+filtro;
 
         try {
             PreparedStatement st = com.prepareStatement(query);
@@ -116,15 +116,16 @@ public class NCliente {
 
             pst.setString(1, Cliente.getNombre());
             pst.setString(2, Cliente.getApellido());  
-            pst.setString(2, Cliente.getTelefono());
-            pst.setString(3, Cliente.getIdentificacion());
-            pst.setString(3, Cliente.getStatus());
+            pst.setString(3, Cliente.getTelefono());
+            pst.setString(4, Cliente.getIdentificacion());
+            pst.setString(5, Cliente.getStatus());
+            pst.setInt(6, Cliente.getClienteId());
           
           
 
             int n = pst.executeUpdate();
 
-            if (n != 0) {
+            if (n>0) {
                result=true;
             } 
         } catch (Exception e) {
@@ -135,10 +136,10 @@ public class NCliente {
     } 
                    
    
-    //=========================VERIFICA SI EXISTE LIBRO=============================================
+    //=========================VERIFICA si existe cliente=============================================
           public boolean verificaCliente(DCliente Cliente) {
               
-        query ="SELECT * FROM Cliente WHERE Nombre=? AND Apellido=? AND Identificacion=? ";
+        query ="SELECT * FROM Cliente WHERE  Identificacion=? ";
 
         int contador=0;
         boolean result=false;
@@ -146,9 +147,7 @@ public class NCliente {
         try {
             PreparedStatement st = com.prepareStatement(query);
             
-           st.setString(1, Cliente.getNombre());
-           st.setString(2, Cliente.getApellido());
-           st.setString(3, Cliente.getIdentificacion());
+           st.setString(1, Cliente.getIdentificacion());
             
             ResultSet rs = st.executeQuery();
 
