@@ -105,7 +105,8 @@ public class DialogClientePrestamo extends javax.swing.JDialog {
 
     private void jTableClienteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableClienteMousePressed
 
-        if(evt.getClickCount()==2)
+        try {
+               if(evt.getClickCount()==2)
         {
             JTable table =(JTable) evt.getSource();
             String Name=(String.valueOf(table.getValueAt(table.getSelectedRow(),1)));
@@ -114,8 +115,12 @@ public class DialogClientePrestamo extends javax.swing.JDialog {
             
            
 
-          this.setVisible(false);//closed of form
+          this.dispose();//closed of form
         }
+        } catch (Exception e) {this.dispose();//closed of form
+        }
+     
+        
     }//GEN-LAST:event_jTableClienteMousePressed
 
     /**
@@ -164,7 +169,7 @@ public class DialogClientePrestamo extends javax.swing.JDialog {
         try {
             DefaultTableModel modelo;
             NCliente Cliente = new NCliente();
-            modelo= Cliente.fillDataTable("Where 1=1");
+            modelo= Cliente.fillDataTable("Where Status='Disponible'");
             
             jTableCliente.setModel(modelo);
 

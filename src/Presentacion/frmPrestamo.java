@@ -1,10 +1,11 @@
 
 package Presentacion;
 
+import Negocio.NLibro;
+import Negocio.NRevista;
 import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -12,10 +13,10 @@ import javax.swing.table.DefaultTableModel;
 public class frmPrestamo extends javax.swing.JInternalFrame {
 
     Date fecha;
-    
+  
     public frmPrestamo() {
         initComponents();
-        
+   
       Calendar calendar = Calendar.getInstance();
       calendar.setTime(fecha.from(Instant.now())); // Configuramos la fecha que se recibe	
       calendar.add(Calendar.DAY_OF_MONTH,5);  // numero de Dias a añadir, o restar en caso de Dias<0
@@ -26,6 +27,8 @@ public class frmPrestamo extends javax.swing.JInternalFrame {
       datePrestamo.setDate(fecha.from(Instant.now()));//establece la prestamo
       dateDevolucion.setDate(calendar.getTime());//establece la fecha de devolucion
  
+        llenar_TablaLibro("Where Status='Disponible'");
+        llenar_TablaRevista("Where Status='Disponible'");
     }
     
     /*Constructor cuando se insert un cliente*/
@@ -35,33 +38,10 @@ public class frmPrestamo extends javax.swing.JInternalFrame {
         txtClienteIdPre.setText(ClientId);
         txtClienteDev.setText(Client);
         txtClienteIdDev.setText(ClientId);
+
     }
-    
     
     /*Constructor cuando se inserta libro o revista*/
-    public frmPrestamo(Object[] DatosTabla)
-    {
-       
-        DefaultTableModel modelo;
-
-        String[] titulos = {"ID","Titulo","Categoria","Autor","Status"};
-
-        Object[] registro = new Object[5];
-        modelo = new DefaultTableModel(null, titulos);
-        
-        try {
-        
-        modelo.addRow(DatosTabla);
-        
-        jTablePrestamo.setModel(modelo);
-         
-         
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-        
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -80,12 +60,17 @@ public class frmPrestamo extends javax.swing.JInternalFrame {
         txtClientePre = new javax.swing.JTextField();
         dateDevolucion = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
-        btnLibro = new javax.swing.JButton();
-        btnRevista = new javax.swing.JButton();
         brnRegistrarP = new javax.swing.JButton();
         txtClienteIdPre = new javax.swing.JTextField();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableLibro = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableRevista = new javax.swing.JTable();
+        jScrollPane5 = new javax.swing.JScrollPane();
         jTablePrestamo = new javax.swing.JTable();
+        btnAgregarLibro = new javax.swing.JButton();
+        btnAgregarRevista = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         txtClienteDev = new javax.swing.JTextField();
         btnClienteDev = new javax.swing.JButton();
@@ -121,25 +106,6 @@ public class frmPrestamo extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Fecha Devolucion");
 
-        btnLibro.setBackground(new java.awt.Color(116, 178, 92));
-        btnLibro.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnLibro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/Books_30px_1.png"))); // NOI18N
-        btnLibro.setText("Libro");
-        btnLibro.setContentAreaFilled(false);
-        btnLibro.setOpaque(true);
-        btnLibro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLibroActionPerformed(evt);
-            }
-        });
-
-        btnRevista.setBackground(new java.awt.Color(116, 178, 92));
-        btnRevista.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnRevista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/Revista_30px.png"))); // NOI18N
-        btnRevista.setText("Revista");
-        btnRevista.setContentAreaFilled(false);
-        btnRevista.setOpaque(true);
-
         brnRegistrarP.setBackground(new java.awt.Color(0, 179, 143));
         brnRegistrarP.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         brnRegistrarP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/Save_30px.png"))); // NOI18N
@@ -147,89 +113,137 @@ public class frmPrestamo extends javax.swing.JInternalFrame {
         brnRegistrarP.setContentAreaFilled(false);
         brnRegistrarP.setOpaque(true);
 
+        jTableLibro.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTableLibro);
+
+        jTableRevista.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTableRevista);
+
         jTablePrestamo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "TITULO", "AUTOR", "TIPO"
+                "ID", "Titulo", "Autor", "Tipo"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
+        ));
+        jScrollPane5.setViewportView(jTablePrestamo);
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        btnAgregarLibro.setText("Agregar Libro");
+        btnAgregarLibro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarLibroActionPerformed(evt);
             }
         });
-        jScrollPane3.setViewportView(jTablePrestamo);
-        if (jTablePrestamo.getColumnModel().getColumnCount() > 0) {
-            jTablePrestamo.getColumnModel().getColumn(0).setHeaderValue("ID");
-            jTablePrestamo.getColumnModel().getColumn(1).setHeaderValue("TITULO");
-            jTablePrestamo.getColumnModel().getColumn(2).setHeaderValue("AUTOR");
-            jTablePrestamo.getColumnModel().getColumn(3).setHeaderValue("TIPO");
-        }
+
+        btnAgregarRevista.setText("Agregar revista");
+        btnAgregarRevista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarRevistaActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Borrar ");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(btnClientePre)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtClientePre))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(datePrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(dateDevolucion, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(90, 90, 90)
-                        .addComponent(jLabel2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtClienteIdPre, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(165, 165, 165)
+                .addComponent(btnAgregarLibro)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAgregarRevista)
+                .addGap(246, 246, 246))
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(btnLibro)
+                        .addGap(40, 40, 40)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(btnClientePre)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtClientePre, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(datePrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(77, 77, 77)
+                                .addComponent(jLabel2)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtClienteIdPre, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dateDevolucion, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnRevista)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3))
-                .addContainerGap())
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(353, 353, 353)
-                .addComponent(brnRegistrarP)
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(243, 243, 243)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(127, 127, 127)
+                                .addComponent(brnRegistrarP))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(424, 424, 424)
+                        .addComponent(jButton1)))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(55, 55, 55)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnClientePre)
+                    .addComponent(txtClientePre, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtClienteIdPre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnClientePre)
-                        .addComponent(txtClientePre, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtClienteIdPre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnLibro)
-                        .addComponent(btnRevista, javax.swing.GroupLayout.Alignment.TRAILING)))
-                .addGap(74, 74, 74)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(datePrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dateDevolucion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel1))
+                    .addComponent(dateDevolucion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(datePrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(50, 50, 50)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgregarLibro)
+                    .addComponent(btnAgregarRevista))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(brnRegistrarP)
                 .addContainerGap())
         );
@@ -283,7 +297,7 @@ public class frmPrestamo extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtClienteIdDev, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(225, Short.MAX_VALUE))
+                .addContainerGap(333, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -295,7 +309,7 @@ public class frmPrestamo extends javax.swing.JInternalFrame {
                     .addComponent(txtClienteIdDev, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 324, Short.MAX_VALUE)
                 .addComponent(btnDevolver)
                 .addContainerGap())
         );
@@ -334,39 +348,134 @@ public class frmPrestamo extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnClientePreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientePreActionPerformed
-        DialogClientePrestamo cliente=new DialogClientePrestamo(null, true);
+        
+        DialogClientePrestamo cliente=new DialogClientePrestamo(null,true);
         
         cliente.setVisible(true);
         
         
     }//GEN-LAST:event_btnClientePreActionPerformed
 
-    private void btnLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLibroActionPerformed
-        DialogLibroPrestamo libro=new DialogLibroPrestamo(null, true);
+    private void btnAgregarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarLibroActionPerformed
         
-        libro.setVisible(true);
-    }//GEN-LAST:event_btnLibroActionPerformed
+      if(jTablePrestamo.getRowCount()<3){
+          if(jTableLibro.getSelectedRow()>=0){
+          DefaultTableModel model=(DefaultTableModel) jTablePrestamo.getModel();
+           String[] data=new String[4];
+           
+           data[0]=String.valueOf(jTableLibro.getValueAt(jTableLibro.getSelectedRow(),0));
+           data[1]=String.valueOf(jTableLibro.getValueAt(jTableLibro.getSelectedRow(),1));
+           data[2]=String.valueOf(jTableLibro.getValueAt(jTableLibro.getSelectedRow(),3));
+           data[3]="1";
+           
+           boolean existe=false;
+              for (int i = 0; i < jTablePrestamo.getRowCount(); i++) {
+                  
+                   if(jTablePrestamo.getValueAt(i,1).equals(data[1]))
+                   {existe=true;}
+              }
+           
+              if(existe==false)
+              {
+           model.addRow(data);
+              }
+          }
+      }
+        
+    }//GEN-LAST:event_btnAgregarLibroActionPerformed
+
+    private void btnAgregarRevistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarRevistaActionPerformed
+         
+        if(jTablePrestamo.getRowCount()<3){
+            if(jTableRevista.getSelectedRow()>=0){
+        DefaultTableModel model=(DefaultTableModel) jTablePrestamo.getModel();
+           String[] data=new String[4];
+           
+           data[0]=String.valueOf(jTableRevista.getValueAt(jTableRevista.getSelectedRow(),0));
+           data[1]=String.valueOf(jTableRevista.getValueAt(jTableRevista.getSelectedRow(),1));
+           data[2]=String.valueOf(jTableRevista.getValueAt(jTableRevista.getSelectedRow(),3));
+           data[3]="2";
+           
+           boolean existe=false;
+              for (int i = 0; i < jTablePrestamo.getRowCount(); i++) {
+                  
+                   if(jTablePrestamo.getValueAt(i,1).equals(data[1]))
+                   {existe=true;}
+              }
+           
+              if(existe==false)
+              {
+           model.addRow(data);
+              }
+              
+            }
+        }
+    }//GEN-LAST:event_btnAgregarRevistaActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        DefaultTableModel model=(DefaultTableModel) jTablePrestamo.getModel();
+        if(jTablePrestamo.getRowCount()>0)
+        {
+            if(jTablePrestamo.getSelectedRow()>=0){
+         model.removeRow(jTablePrestamo.getSelectedRow());
+            }
+            else{ JOptionPane.showMessageDialog(null, "Seleccione un Prestamo para Borrar");}
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
+      private  void llenar_TablaLibro(String filtro) {
+        try {
+            DefaultTableModel modelo;
+            NLibro libro = new NLibro();
+            modelo =libro.fillDataTable(filtro);
+            
+            jTableLibro.setModel(modelo);
+
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(rootPane, e);
+        }
+  }
+      
+           private  void llenar_TablaRevista(String filtro) {
+        try {
+            DefaultTableModel modelo;
+            NRevista libro = new NRevista();
+            modelo =libro.fillDataTable(filtro);
+            
+            jTableRevista.setModel(modelo);
+
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(rootPane, e);
+        }
+  }
+      
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton brnRegistrarP;
+    private javax.swing.JButton btnAgregarLibro;
+    private javax.swing.JButton btnAgregarRevista;
     private javax.swing.JButton btnClienteDev;
     private javax.swing.JButton btnClientePre;
     private javax.swing.JButton btnDevolver;
-    private javax.swing.JButton btnLibro;
-    private javax.swing.JButton btnRevista;
     private com.toedter.calendar.JDateChooser dateDevolucion;
     private com.toedter.calendar.JDateChooser datePrestamo;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTableDevolucion;
-    public javax.swing.JTable jTablePrestamo;
+    private javax.swing.JTable jTableLibro;
+    private javax.swing.JTable jTablePrestamo;
+    private javax.swing.JTable jTableRevista;
     private javax.swing.JTextField txtClienteDev;
     private javax.swing.JTextField txtClienteIdDev;
     public static javax.swing.JTextField txtClienteIdPre;
