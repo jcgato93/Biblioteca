@@ -9,7 +9,7 @@ public class DPrestamo {
     private int ClienteId;
     private String FechaPrestamo;
     private String FechaDevolucion;
-    private int LibroId_RevistaId;
+    private String LibroId_RevistaId;
     private String Tipo;
 
     public int getPrestamoId() {
@@ -52,11 +52,11 @@ public class DPrestamo {
         this.FechaDevolucion = FechaDevolucion;
     }
 
-    public int getLibroId_RevistaId() {
+    public String getLibroId_RevistaId() {
         return LibroId_RevistaId;
     }
 
-    public void setLibroId_RevistaId(int LibroId_RevistaId) {
+    public void setLibroId_RevistaId(String LibroId_RevistaId) {
         this.LibroId_RevistaId = LibroId_RevistaId;
     }
 

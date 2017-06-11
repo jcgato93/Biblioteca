@@ -1,8 +1,11 @@
 
 package Presentacion;
 
+import Datos.DPrestamo;
 import Negocio.NLibro;
+import Negocio.NPrestamo;
 import Negocio.NRevista;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
@@ -56,9 +59,7 @@ public class frmPrestamo extends javax.swing.JInternalFrame {
         jPanel3 = new javax.swing.JPanel();
         btnClientePre = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        datePrestamo = new com.toedter.calendar.JDateChooser();
         txtClientePre = new javax.swing.JTextField();
-        dateDevolucion = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
         brnRegistrarP = new javax.swing.JButton();
         txtClienteIdPre = new javax.swing.JTextField();
@@ -71,6 +72,8 @@ public class frmPrestamo extends javax.swing.JInternalFrame {
         btnAgregarLibro = new javax.swing.JButton();
         btnAgregarRevista = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        datePrestamo = new com.toedter.calendar.JDateChooser();
+        dateDevolucion = new com.toedter.calendar.JDateChooser();
         jPanel2 = new javax.swing.JPanel();
         txtClienteDev = new javax.swing.JTextField();
         btnClienteDev = new javax.swing.JButton();
@@ -101,6 +104,7 @@ public class frmPrestamo extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Fecha Prestamo");
 
+        txtClientePre.setEditable(false);
         txtClientePre.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -112,6 +116,11 @@ public class frmPrestamo extends javax.swing.JInternalFrame {
         brnRegistrarP.setText("Registrar Prestamo");
         brnRegistrarP.setContentAreaFilled(false);
         brnRegistrarP.setOpaque(true);
+        brnRegistrarP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                brnRegistrarPActionPerformed(evt);
+            }
+        });
 
         jTableLibro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -188,17 +197,17 @@ public class frmPrestamo extends javax.swing.JInternalFrame {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(btnClientePre)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtClientePre, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtClientePre, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtClienteIdPre, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
-                                .addComponent(datePrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(77, 77, 77)
-                                .addComponent(jLabel2)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtClienteIdPre, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dateDevolucion, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(datePrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(85, 85, 85)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(dateDevolucion, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -224,22 +233,25 @@ public class frmPrestamo extends javax.swing.JInternalFrame {
                     .addComponent(btnClientePre)
                     .addComponent(txtClientePre, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtClienteIdPre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
+                .addGap(28, 28, 28)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(jLabel1))
-                    .addComponent(dateDevolucion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(datePrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
+                        .addComponent(datePrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(dateDevolucion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(47, 47, 47)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAgregarLibro)
-                    .addComponent(btnAgregarRevista))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAgregarRevista)
+                    .addComponent(btnAgregarLibro))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -261,6 +273,11 @@ public class frmPrestamo extends javax.swing.JInternalFrame {
         btnClienteDev.setText("Cliente");
         btnClienteDev.setContentAreaFilled(false);
         btnClienteDev.setOpaque(true);
+        btnClienteDev.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClienteDevActionPerformed(evt);
+            }
+        });
 
         btnDevolver.setBackground(new java.awt.Color(0, 179, 143));
         btnDevolver.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -277,7 +294,7 @@ public class frmPrestamo extends javax.swing.JInternalFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "ID", "TITULO", "AUTOR", "TIPO"
+                "Fecha_Prestamo", "Fecha_Devolucion", "LibroId_RevistaId", "Tipo"
             }
         ));
         jScrollPane4.setViewportView(jTableDevolucion);
@@ -296,8 +313,8 @@ public class frmPrestamo extends javax.swing.JInternalFrame {
                         .addComponent(txtClienteDev, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtClienteIdDev, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(333, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(311, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -366,7 +383,7 @@ public class frmPrestamo extends javax.swing.JInternalFrame {
            data[0]=String.valueOf(jTableLibro.getValueAt(jTableLibro.getSelectedRow(),0));
            data[1]=String.valueOf(jTableLibro.getValueAt(jTableLibro.getSelectedRow(),1));
            data[2]=String.valueOf(jTableLibro.getValueAt(jTableLibro.getSelectedRow(),3));
-           data[3]="1";
+           data[3]="Libro";
            
            boolean existe=false;
               for (int i = 0; i < jTablePrestamo.getRowCount(); i++) {
@@ -393,8 +410,8 @@ public class frmPrestamo extends javax.swing.JInternalFrame {
            
            data[0]=String.valueOf(jTableRevista.getValueAt(jTableRevista.getSelectedRow(),0));
            data[1]=String.valueOf(jTableRevista.getValueAt(jTableRevista.getSelectedRow(),1));
-           data[2]=String.valueOf(jTableRevista.getValueAt(jTableRevista.getSelectedRow(),3));
-           data[3]="2";
+           data[2]="";//String.valueOf(jTableRevista.getValueAt(jTableRevista.getSelectedRow(),3));
+           data[3]="Revista";
            
            boolean existe=false;
               for (int i = 0; i < jTablePrestamo.getRowCount(); i++) {
@@ -424,6 +441,60 @@ public class frmPrestamo extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void brnRegistrarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnRegistrarPActionPerformed
+        String cadenaId="";
+        String cadenaTipo="";
+        
+        if(!txtClientePre.getText().equals("") && jTablePrestamo.getRowCount()>0)
+        {
+        NPrestamo prestamotools=new NPrestamo();
+        DPrestamo prestamo=new DPrestamo();
+     
+        prestamo.setClienteId(Integer.parseInt(txtClienteIdPre.getText()));
+        prestamo.setUserId(1);
+        
+        //==================Cambiar formato de Fecha para capturar
+        String formato = datePrestamo.getDateFormatString();
+        Date date = datePrestamo.getDate();
+        SimpleDateFormat sdf = new SimpleDateFormat(formato);
+        
+        String forma = dateDevolucion.getDateFormatString();
+        Date dat = dateDevolucion.getDate();
+        SimpleDateFormat sdfa = new SimpleDateFormat(forma);
+        //=====================================
+        
+        prestamo.setFechaPrestamo(String.valueOf(sdf.format(date)));
+        prestamo.setFechaDevolucion(String.valueOf(sdfa.format(dat)));
+        
+            for (int i = 0; i < jTablePrestamo.getRowCount(); i++) {
+                
+            cadenaId=cadenaId+jTablePrestamo.getValueAt(i,0).toString()+"$";
+            cadenaTipo=cadenaTipo+jTablePrestamo.getValueAt(i,3).toString()+"$";
+            }
+        prestamo.setLibroId_RevistaId(cadenaId);
+        prestamo.setTipo(cadenaTipo);
+            
+          boolean result= prestamotools.GuardarPrestamo(prestamo,jTablePrestamo.getRowCount());
+          
+          if(result)
+          {
+           JOptionPane.showMessageDialog(null, "Se Guardo correctamente \nel prestamo");
+           this.dispose();
+          }
+        }
+        else
+        {
+         JOptionPane.showMessageDialog(null, "Ingrege Cliente y Libros");
+        }
+        
+        
+    }//GEN-LAST:event_brnRegistrarPActionPerformed
+
+    private void btnClienteDevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteDevActionPerformed
+        DialogClientePrestamo cliente=new DialogClientePrestamo(null,true);
+        
+        cliente.setVisible(true);             
+    }//GEN-LAST:event_btnClienteDevActionPerformed
 
       private  void llenar_TablaLibro(String filtro) {
         try {

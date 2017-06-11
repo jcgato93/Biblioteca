@@ -5,11 +5,9 @@
         <group>
             <file>file:/C:/Users/GATO/Documents/NetBeansProjects/Biblioteca/src/Negocio/NPrestamo.java</file>
             <file>file:/C:/Users/GATO/Documents/NetBeansProjects/Biblioteca/src/Presentacion/frmPrestamo.java</file>
-            <file>file:/C:/Users/GATO/Documents/NetBeansProjects/Biblioteca/src/Negocio/NRevista.java</file>
-            <file>file:/C:/Users/GATO/Documents/NetBeansProjects/Biblioteca/src/Presentacion/frmLibro.java</file>
-            <file>file:/C:/Users/GATO/Documents/NetBeansProjects/Biblioteca/src/Negocio/NLibro.java</file>
             <file>file:/C:/Users/GATO/Documents/NetBeansProjects/Biblioteca/src/Datos/DPrestamo.java</file>
-            <file>file:/C:/Users/GATO/Documents/NetBeansProjects/Biblioteca/src/Presentacion/DialogClientePrestamo.java</file>
+            <file>file:/C:/Users/GATO/Documents/NetBeansProjects/Biblioteca/src/Presentacion/DashBoard.java</file>
+            <file>file:/C:/Users/GATO/Documents/NetBeansProjects/Biblioteca/src/Negocio/NCliente.java</file>
         </group>
     </open-files>
 </project-private>
