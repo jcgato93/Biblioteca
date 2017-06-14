@@ -21,10 +21,15 @@ public class DashBoard extends javax.swing.JFrame {
      frmLibro libro;
      frmPrestamo prestamo;
      frmCliente cliente;
+     frmRevista revista;
+     frmUsuario usuarios;
+     
      
      int instanciaLibro=0;//Para controlar que se habra mas de un formulario a la vez
      int instanciaPrestamo=0;
      int instanciaCliente=0;
+     int instanciaRevista=0;
+     int instanciaUsuarios=0;
      
      
      
@@ -116,6 +121,11 @@ public class DashBoard extends javax.swing.JFrame {
         btnUsuarios.setText("Usuarios");
         btnUsuarios.setToolTipText("");
         btnUsuarios.setOpaque(true);
+        btnUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUsuariosMouseClicked(evt);
+            }
+        });
 
         btnClientes.setBackground(new java.awt.Color(34, 34, 34));
         btnClientes.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -331,7 +341,23 @@ public class DashBoard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLibrosMouseClicked
 
     private void btnRevistasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRevistasMouseClicked
-        // TODO add your handling code here:
+//            if(instanciaLibro<1){
+//            try {
+//                libro=new frmLibro();
+//                jDesktopPane.add(libro);
+//                libro.setMaximum(true);
+//                libro.show();
+//                instanciaLibro++;
+//            } catch (PropertyVetoException ex) {
+//                Logger.getLogger(DashBoard.class.getName()).log(Level.SEVERE, null, ex);
+//                JOptionPane.showMessageDialog(this, ex);
+//            } 
+//        }  else{
+//            libro.dispose();
+//            instanciaLibro--;
+//            jDesktopPane.removeAll();
+//            
+//        }
     }//GEN-LAST:event_btnRevistasMouseClicked
 
     private void btnPrestamosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrestamosMouseClicked
@@ -374,6 +400,26 @@ public class DashBoard extends javax.swing.JFrame {
          jDesktopPane.removeAll();
         }
     }//GEN-LAST:event_btnClientesMouseClicked
+
+    private void btnUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUsuariosMouseClicked
+      if(instanciaUsuarios<1){
+            try {
+                usuarios=new frmUsuario();
+                jDesktopPane.add(usuarios);
+                usuarios.setMaximum(true);
+                usuarios.show();
+                instanciaUsuarios++;
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(DashBoard.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, ex);
+            } 
+        }  else{
+            usuarios.dispose();
+            instanciaUsuarios--;
+            jDesktopPane.removeAll();
+            
+        }
+    }//GEN-LAST:event_btnUsuariosMouseClicked
 
     /**
      * @param args the command line arguments

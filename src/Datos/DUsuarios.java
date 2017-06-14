@@ -13,9 +13,18 @@ public class DUsuarios {
     private String Login;
     private String Password;
     private int  RolId;
+    private String Status;
     
     public DUsuarios(){
     
+    }
+
+    public void setStatus(String Status) {
+        this.Status = Status;
+    }
+
+    public String getStatus() {
+        return Status;
     }
 
     public int getUserId() {
@@ -65,7 +74,8 @@ public class DUsuarios {
     public void setRolId(int RolId) {
         this.RolId = RolId;
     }
-    
+
+  
     
     
     
