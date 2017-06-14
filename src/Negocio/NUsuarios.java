@@ -168,8 +168,8 @@ private String query="";
             pst.setString(2, Usuarios.getApellido());
             pst.setString(3, Usuarios.getLogin());
             pst.setString(4, Usuarios.getPassword());
-            pst.setInt(5, Usuarios.getRolId());
-            pst.setString(6, Usuarios.getStatus());
+            pst.setInt(5,1);
+            pst.setString(6,"Disponible");
 
             int n = pst.executeUpdate();
 
@@ -201,9 +201,9 @@ private String query="";
             pst.setString(2, Usuarios.getApellido());  
             pst.setString(3, Usuarios.getLogin());
             pst.setString(4, Usuarios.getPassword());
-            pst.setInt(5, Usuarios.getRolId());
-            pst.setInt(6, Usuarios.getUserId());
-            pst.setString(7, Usuarios.getStatus());
+            pst.setInt(5, 1);
+            pst.setString(6, "Disponible");
+            pst.setInt(7, Usuarios.getUserId());
           
 
             int n = pst.executeUpdate();

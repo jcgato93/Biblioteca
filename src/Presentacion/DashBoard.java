@@ -111,6 +111,12 @@ public class DashBoard extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnLibrosMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnLibrosMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnLibrosMouseExited(evt);
+            }
         });
 
         btnUsuarios.setBackground(new java.awt.Color(34, 34, 34));
@@ -125,6 +131,12 @@ public class DashBoard extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnUsuariosMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnUsuariosMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnUsuariosMouseExited(evt);
+            }
         });
 
         btnClientes.setBackground(new java.awt.Color(34, 34, 34));
@@ -138,6 +150,12 @@ public class DashBoard extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnClientesMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnClientesMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnClientesMouseExited(evt);
+            }
         });
 
         btnReportes.setBackground(new java.awt.Color(34, 34, 34));
@@ -148,6 +166,14 @@ public class DashBoard extends javax.swing.JFrame {
         btnReportes.setText("Reportes");
         btnReportes.setToolTipText("");
         btnReportes.setOpaque(true);
+        btnReportes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnReportesMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnReportesMouseExited(evt);
+            }
+        });
 
         btnLogOut.setBackground(new java.awt.Color(34, 34, 34));
         btnLogOut.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -160,6 +186,12 @@ public class DashBoard extends javax.swing.JFrame {
         btnLogOut.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnLogOutMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnLogOutMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnLogOutMouseExited(evt);
             }
         });
 
@@ -174,6 +206,12 @@ public class DashBoard extends javax.swing.JFrame {
         btnRevistas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnRevistasMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnRevistasMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnRevistasMouseExited(evt);
             }
         });
 
@@ -420,6 +458,54 @@ public class DashBoard extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_btnUsuariosMouseClicked
+
+    private void btnLibrosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLibrosMouseEntered
+        btnLibros.setBackground(colEntered);
+    }//GEN-LAST:event_btnLibrosMouseEntered
+
+    private void btnLibrosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLibrosMouseExited
+        btnLibros.setBackground(colExited);
+    }//GEN-LAST:event_btnLibrosMouseExited
+
+    private void btnRevistasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRevistasMouseEntered
+       btnRevistas.setBackground(colEntered);
+    }//GEN-LAST:event_btnRevistasMouseEntered
+
+    private void btnRevistasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRevistasMouseExited
+         btnRevistas.setBackground(colExited);
+    }//GEN-LAST:event_btnRevistasMouseExited
+
+    private void btnClientesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClientesMouseEntered
+       btnClientes.setBackground(colEntered);
+    }//GEN-LAST:event_btnClientesMouseEntered
+
+    private void btnClientesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClientesMouseExited
+        btnClientes.setBackground(colExited);
+    }//GEN-LAST:event_btnClientesMouseExited
+
+    private void btnReportesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportesMouseEntered
+        btnReportes.setBackground(colEntered);
+    }//GEN-LAST:event_btnReportesMouseEntered
+
+    private void btnReportesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportesMouseExited
+        btnReportes.setBackground(colExited);
+    }//GEN-LAST:event_btnReportesMouseExited
+
+    private void btnUsuariosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUsuariosMouseEntered
+        btnUsuarios.setBackground(colEntered);
+    }//GEN-LAST:event_btnUsuariosMouseEntered
+
+    private void btnUsuariosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUsuariosMouseExited
+       btnUsuarios.setBackground(colExited);
+    }//GEN-LAST:event_btnUsuariosMouseExited
+
+    private void btnLogOutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogOutMouseEntered
+         btnLogOut.setBackground(colEntered);
+    }//GEN-LAST:event_btnLogOutMouseEntered
+
+    private void btnLogOutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogOutMouseExited
+        btnLogOut.setBackground(colExited);
+    }//GEN-LAST:event_btnLogOutMouseExited
 
     /**
      * @param args the command line arguments

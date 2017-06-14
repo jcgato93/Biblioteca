@@ -309,7 +309,7 @@ public class frmUsuario extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1027, Short.MAX_VALUE)
+                .addComponent(jTabbedPane2)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -401,10 +401,10 @@ public class frmUsuario extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
+        
         DUsuarios obj=new DUsuarios();
 
-        obj.setUserId(Integer.parseInt(txtUserId.getText()));
+        
         obj.setNombre(txtUsuNombre.getText());
         obj.setApellido(txtUsuApellido.getText());
         obj.setLogin(txtUsuario.getText());
@@ -464,7 +464,7 @@ private void apply_filters(){
         {
          query="AND ";
         }
-        query=query+"cli.Nombre like '"+txtGetNombre1.getText()+"%' ";
+        query=query+"usu.Nombre like '"+txtGetNombre1.getText()+"%' ";
     }
     
     if(!txtGetApellido1.getText().equals(""))
@@ -478,7 +478,7 @@ private void apply_filters(){
       {
           query="AND ";
       }
-      query=query+"cli.Apellido like '"+txtGetApellido1.getText()+"%' ";
+      query=query+"usu.Apellido like '"+txtGetApellido1.getText()+"%' ";
     }
         llenar_Tabla(query);
     }
